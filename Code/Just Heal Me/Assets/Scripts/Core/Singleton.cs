@@ -1,0 +1,22 @@
+﻿using UnityEngine;
+
+namespace Core
+{
+    public class Singleton<T> : MonoBehaviour where T : Singleton<T>
+    {
+        public static T Instance { get; private set; }
+
+        public static bool IsInitalized => Instance == null;
+
+        private void Awake()
+        {
+            if (Instance == null) Instance = (T) this;
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
+        }
+    }
+}
