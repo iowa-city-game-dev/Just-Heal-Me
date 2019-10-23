@@ -33,7 +33,7 @@ namespace Managers
         {
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
-            
+
             if (horizontal == 0f && vertical == 0f) return; // no need to do anything
 
             // we want to maintain our facing direction
@@ -45,11 +45,11 @@ namespace Managers
             {
                 _facingRight = true;
             }
-            
+
             // Which way are we running?
-            _player.transform.rotation = Quaternion.Euler(0, _facingRight ? 0 : 180, 0);
-            
-            var velocity = _player.Speed * new Vector3(horizontal,0,vertical); // Speed (3) is hardcoded for right now
+            _player.transform.rotation = Quaternion.Euler(_facingRight ? 45 : -45, _facingRight ? 0 : 180, 0);
+
+            var velocity = _player.Speed * new Vector3(horizontal, 0, vertical); // Speed (3) is hardcoded for right now
             _player.CharacterController.Move(velocity * Time.deltaTime);
         }
 
