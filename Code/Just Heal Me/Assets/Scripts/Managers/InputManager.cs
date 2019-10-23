@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using Core;
+﻿using Core;
 using UnityEngine;
 
 namespace Managers
 {
     public class InputManager : Singleton<InputManager>
     {
+        public float CameraAngle { get; set; } = 45; // Default is 45degrees
+
         private Player _player;
         private bool _facingRight = true;
 
@@ -17,6 +18,11 @@ namespace Managers
             // Find the Player  
             _player = FindObjectOfType<Player>();
             if (_player == null) Debug.LogError("Could not find the player!");
+
+            // Update the intial rotation of the player
+            var angles = transform.rotation.eulerAngles;
+            angles.x = CameraAngle;
+            _player.transform.rotation = Quaternion.Euler(angles);
         }
 
         // Update is called once per frame
@@ -47,7 +53,7 @@ namespace Managers
             }
 
             // Which way are we running?
-            _player.transform.rotation = Quaternion.Euler(_facingRight ? 45 : -45, _facingRight ? 0 : 180, 0);
+            _player.transform.rotation = Quaternion.Euler(_facingRight ? CameraAngle : CameraAngle * -1, _facingRight ? 0 : 180, 0);
 
             var velocity = _player.Speed * new Vector3(horizontal, 0, vertical); // Speed (3) is hardcoded for right now
             _player.CharacterController.Move(velocity * Time.deltaTime);

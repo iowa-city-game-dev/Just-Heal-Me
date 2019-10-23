@@ -407,6 +407,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fighter
       objectReference: {fileID: 0}
+    - target: {fileID: 1534566531219419982, guid: e0f28276295bc2b41955b1cc9a983e43,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8768567061698168388, guid: e0f28276295bc2b41955b1cc9a983e43,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -425,7 +430,7 @@ PrefabInstance:
     - target: {fileID: 8768567061698168388, guid: e0f28276295bc2b41955b1cc9a983e43,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.38268343
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8768567061698168388, guid: e0f28276295bc2b41955b1cc9a983e43,
         type: 3}
@@ -440,7 +445,7 @@ PrefabInstance:
     - target: {fileID: 8768567061698168388, guid: e0f28276295bc2b41955b1cc9a983e43,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.92387956
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8768567061698168388, guid: e0f28276295bc2b41955b1cc9a983e43,
         type: 3}
@@ -450,7 +455,7 @@ PrefabInstance:
     - target: {fileID: 8768567061698168388, guid: e0f28276295bc2b41955b1cc9a983e43,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8768567061698168388, guid: e0f28276295bc2b41955b1cc9a983e43,
         type: 3}
@@ -552,6 +557,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2427516824328943717, guid: 9b9e38ca3876f9946950ae0aa9a56653,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 5730012515727481817, guid: 9b9e38ca3876f9946950ae0aa9a56653,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 5422487448271116995, guid: 9b9e38ca3876f9946950ae0aa9a56653,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840371530252342653, guid: 9b9e38ca3876f9946950ae0aa9a56653,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b9e38ca3876f9946950ae0aa9a56653, type: 3}
