@@ -11,6 +11,8 @@ namespace Core
         private void Awake()
         {
             if (Instance == null) Instance = (T) this;
+            
+            DontDestroyOnLoad(gameObject);
         }
 
         private void OnDestroy()

@@ -14,9 +14,6 @@ namespace Managers
         // Start is called before the first frame update
         void Start()
         {
-            // Make sure this stays around
-            DontDestroyOnLoad(gameObject);
-            
             // Find the Player  
             _player = FindObjectOfType<Player>();
             if (_player == null) Debug.LogError("Could not find the player!");
