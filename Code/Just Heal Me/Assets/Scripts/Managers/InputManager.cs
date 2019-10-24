@@ -42,6 +42,9 @@ namespace Managers
 
             if (horizontal == 0f && vertical == 0f) return; // no need to do anything
 
+            var isRunning = Input.GetKey(KeyCode.LeftShift);
+            _player.Animator.speed = isRunning ? 3 : 1;
+
             // we want to maintain our facing direction
             if (horizontal < 0)
             {
@@ -55,7 +58,9 @@ namespace Managers
             // Which way are we running?
             _player.transform.rotation = Quaternion.Euler(_facingRight ? CameraAngle : CameraAngle * -1, _facingRight ? 0 : 180, 0);
 
-            var velocity = _player.Speed * new Vector3(horizontal, 0, vertical); // Speed (3) is hardcoded for right now
+            var currentSpeed = isRunning ? _player.Speed * 2f : _player.Speed;
+            var velocity = currentSpeed * new Vector3(horizontal, 0, vertical);
+
             _player.CharacterController.Move(velocity * Time.deltaTime);
         }
 
