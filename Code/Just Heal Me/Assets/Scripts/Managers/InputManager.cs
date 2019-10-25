@@ -9,7 +9,7 @@ namespace Managers
 
         private Player _player;
         private bool _facingRight = true;
-
+        
         #region -----[ Unity Lifecycle ]---------------------------------------
 
         // Start is called before the first frame update
@@ -19,10 +19,7 @@ namespace Managers
             _player = FindObjectOfType<Player>();
             if (_player == null) Debug.LogError("Could not find the player!");
 
-            // Update the intial rotation of the player
-            var angles = transform.rotation.eulerAngles;
-            angles.x = CameraAngle;
-            _player.transform.rotation = Quaternion.Euler(angles);
+            _player.SetupPlayerAngles(CameraAngle);
         }
 
         // Update is called once per frame
@@ -52,6 +49,7 @@ namespace Managers
             }
             else if (horizontal > 0)
             {
+            
                 _facingRight = true;
             }
 
@@ -59,9 +57,11 @@ namespace Managers
             _player.transform.rotation = Quaternion.Euler(_facingRight ? CameraAngle : CameraAngle * -1, _facingRight ? 0 : 180, 0);
 
             var currentSpeed = isRunning ? _player.Speed * 2f : _player.Speed;
-            var velocity = currentSpeed * new Vector3(horizontal, 0, vertical);
+            var velocity = currentSpeed  * Time.deltaTime * new Vector3(horizontal, 0, vertical);
 
-            _player.CharacterController.Move(velocity * Time.deltaTime);
+//            velocity.y = _player.transform.position.y; // This needs to be a static position
+                
+            _player.CharacterController.Move(velocity);
         }
 
         #endregion
