@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - WallChunk
   - Goal
+  - GoodGuy
+  - BadGuy
   layers:
   - Default
   - TransparentFX

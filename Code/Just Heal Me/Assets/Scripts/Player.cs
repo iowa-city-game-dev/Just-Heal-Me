@@ -1,7 +1,7 @@
 ﻿using Scriptable;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Unit
 {
     [SerializeField] private PlayerData playerData;
 
@@ -25,27 +25,27 @@ public class Player : MonoBehaviour
         Animation = GetComponent<Animation>();
     }
 
-    private void Start()
-    {
-        // Setup the player angles
-    }
+    public override void Start()
+	{
+		base.Start();
+	}
 
-    #endregion
+	#endregion
 
-    #region -----[ Public Functions ]------------------------------------------
+	#region -----[ Public Functions ]------------------------------------------
 
-    public void SetupPlayerAngles(float CameraAngle)
-    {
-        // Update the intial rotation of the player
-        var angles = transform.rotation.eulerAngles;
-        angles.x = CameraAngle;
-        transform.rotation = Quaternion.Euler(angles);
+	public override void SetupUnitAngles(float CameraAngle)
+	{
+		// Update the intial rotation of the player
+		var angles = transform.rotation.eulerAngles;
+		angles.x = CameraAngle;
+		transform.rotation = Quaternion.Euler(angles);
 
-        // Now change our Y position by 25%
-        var position = transform.position;
-        position.y -= (position.y * .25f);
-        transform.position = position;
-    }
+		// Now change our Y position by 25%
+		var position = transform.position;
+		position.y -= (position.y * .25f);
+		transform.position = position;
+	}
 
-    #endregion
+	#endregion
 }
