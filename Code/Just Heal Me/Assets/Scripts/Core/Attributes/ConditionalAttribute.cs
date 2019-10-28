@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Core.Attributes
 {
+#if UNITY_EDITOR
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct, Inherited = true)]
     public class ConditionalAttribute : PropertyAttribute
     {
@@ -71,4 +72,5 @@ namespace Core.Attributes
             return enabled;
         }
     }
+#endif
 }

@@ -14,8 +14,9 @@ namespace Scriptable
 
         [Header("Player Stats")]
         public int health;
-
+#if UNITY_EDITOR
         [Conditional("isPlayerCharacter", true, true)]
+#endif
         public int damage;
 
         public int attackSpeed;
