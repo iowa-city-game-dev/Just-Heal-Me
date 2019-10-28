@@ -9,25 +9,29 @@ public class Player : Unit
 
     public CharacterController CharacterController { get; private set; }
 
-    public Animator Animator { get; private set; }
-
-    public Animation Animation { get; private set; }
-
-
     private UnityEngine.Camera _camera;
-    
-    #region -----[ Unity Lifecycle ]-------------------------------------------
 
-    private void Awake()
+	#region -----[ Unity Lifecycle ]-------------------------------------------
+
+	public override void Awake()
     {
+		base.Awake();
+
         CharacterController = GetComponent<CharacterController>();
-        Animator = GetComponent<Animator>();
-        Animation = GetComponent<Animation>();
     }
 
     public override void Start()
 	{
 		base.Start();
+	}
+
+	#endregion
+
+	#region -----[ Protected Functions ]------------------------------------------
+
+	protected override Vector3 GetVelocity()
+	{
+		return CharacterController.velocity;
 	}
 
 	#endregion

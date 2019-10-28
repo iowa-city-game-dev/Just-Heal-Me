@@ -15,19 +15,79 @@ public class Unit : MonoBehaviour, IUnit
 	[SerializeField] protected float AttackRange;
 	[SerializeField] protected float AttackSpeed;
 
+	public Animator Animator { get; protected set; }
+	public Animation Animation { get; protected set; }
+
+
+	protected SpriteRenderer _spriteRenderer;
+	protected Color NormalColor;
+	private Color ReceivedHealColor = Color.yellow;
+
 	protected float TimeOfLastAttack = 0f;
 
 	public GameObject HealthBarContainer;
 
+	private float TimeLastHealWasReceived = 0f;
+	private float HealColorDuration = 0.5f;
+
 	#region -----[ Unity Lifecycle ]-------------------------------------------
+
+	public virtual void Awake()
+	{
+		Animator = GetComponent<Animator>();
+		Animation = GetComponent<Animation>();
+	}
 
 	public virtual void Start()
     {
 		CurrentHealth = MaxHealth;
+
+		_spriteRenderer = GetComponent<SpriteRenderer>();
+
+		if (_spriteRenderer == null)
+		{
+			_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		}
+
+		if (_spriteRenderer != null)
+		{
+			NormalColor = _spriteRenderer.color;
+		}
 	}
 	
     public virtual void Update()
     {
+		UpdateAnimatorValues();
+		UpdateColor();
+	}
+
+	#endregion
+
+	#region -----[ Private Functions ]------------------------------------------
+
+	private void UpdateAnimatorValues()
+	{
+		Animator.SetFloat("HorizontalSpeed", Mathf.Abs(GetVelocity().x));
+	}
+
+	private void UpdateColor()
+	{
+		if (_spriteRenderer.color == ReceivedHealColor)
+		{
+			if (Time.timeSinceLevelLoad > TimeLastHealWasReceived + HealColorDuration)
+			{
+				_spriteRenderer.color = NormalColor;
+			}
+		}
+	}
+
+	#endregion
+
+	#region -----[ Protected Functions ]------------------------------------------
+
+	protected virtual Vector3 GetVelocity()
+	{
+		return new Vector3();
 	}
 
 	#endregion
@@ -46,22 +106,26 @@ public class Unit : MonoBehaviour, IUnit
 		}
 
 		UpdateHealthBar();
-		Debug.Log(name + " took " + rawDamage + " damage.  Current Health: " + CurrentHealth);
 	}
 
 	public virtual void ReceiveHeal(int rawHealAmount)
 	{
-		if (CurrentHealth + rawHealAmount >= MaxHealth)
+		if (CurrentHealth != MaxHealth)
 		{
-			CurrentHealth = MaxHealth;
-		}
-		else
-		{
-			CurrentHealth += rawHealAmount;
-		}
+			_spriteRenderer.color = ReceivedHealColor;
+			TimeLastHealWasReceived = Time.timeSinceLevelLoad;
 
-		UpdateHealthBar();
-		Debug.Log(name + " was healed for " + rawHealAmount + " health.  Current Health: " + CurrentHealth);
+			if (CurrentHealth + rawHealAmount >= MaxHealth)
+			{
+				CurrentHealth = MaxHealth;
+			}
+			else
+			{
+				CurrentHealth += rawHealAmount;
+			}
+
+			UpdateHealthBar();
+		}
 	}
 
 	private void UpdateHealthBar()

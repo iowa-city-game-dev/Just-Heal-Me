@@ -21,27 +21,30 @@ public class AiUnit : Unit
 
 	Unit Target = null;
 
+	public override void Awake()
+	{
+		Animator = Visuals.GetComponent<Animator>();
+		Animation = Visuals.GetComponent<Animation>();
+	}
+
 	public override void Start()
 	{
 		base.Start();
 
 		_navMeshAgent = GetComponent<NavMeshAgent>();
 
-		SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
 		if (_isBadGuy)
 		{
-			renderer.color = Color.red;
-
 			Allies = FindOtherUnitsOfTag("BadGuy");
 			Enemies = FindOtherUnitsOfTag("GoodGuy");
+			Enemies.AddRange(FindOtherUnitsOfTag("Player"));
 
 			SetDestination(gameObject);
 		}
 		else
 		{
-			renderer.color = new Color(135f / 255f, 206f / 255f, 235f / 255f);
-
 			Allies = FindOtherUnitsOfTag("GoodGuy");
+			Allies.AddRange(FindOtherUnitsOfTag("Player"));
 			Enemies = FindOtherUnitsOfTag("BadGuy");
 
 			EndOfLevel = GameObject.FindGameObjectWithTag("Goal");
@@ -57,22 +60,25 @@ public class AiUnit : Unit
 		}
 
 		Visuals.transform.SetParent(null);
-		HealthBarContainer.transform.SetParent(null);
 	}
 	
 	public override void Update()
 	{
+		base.Update();
+
 		if (!IsDead())
 		{
 			UpdateTarget();
 			UpdateDestination();
+			UpdateVisualFacingDirection();
 
 			HandleAttacking();
 		}
 
 		Visuals.transform.position = transform.position;
-		HealthBarContainer.transform.position = transform.position;
 	}
+
+	#region -----[ Private Functions ]------------------------------------------
 
 	private void UpdateTarget()
 	{
@@ -146,8 +152,7 @@ public class AiUnit : Unit
 		}
 		else if (Target != null && !Target.IsDead())
 		{
-			float dist = Vector3.Distance(transform.position, Target.transform.position);
-			if (dist < AttackRange)
+			if (IsInAttackRangeOfTarget())
 			{
 				if (NavMeshDestination.name != gameObject.name)
 				{
@@ -166,17 +171,63 @@ public class AiUnit : Unit
 		}
 	}
 
+	private void UpdateVisualFacingDirection()
+	{
+		bool _facingRight = true;
+
+		float horizontal = _navMeshAgent.velocity.x;
+
+		if (Target != null && IsInAttackRangeOfTarget())
+		{
+			// we want to maintain our facing direction
+			if (Target.transform.position.x < transform.position.x)
+			{
+				_facingRight = false;
+			}
+			else
+			{
+				_facingRight = true;
+			}
+		}
+		else
+		{
+			// we want to maintain our facing direction
+			if (horizontal < 0)
+			{
+				_facingRight = false;
+			}
+			else if (horizontal > 0)
+			{
+				_facingRight = true;
+			}
+		}
+
+		// Which way are we running?
+		Visuals.transform.rotation = Quaternion.Euler(_facingRight ? CameraAngle : CameraAngle * -1, _facingRight ? 0 : 180, 0);
+	}
+
+	private bool IsInAttackRangeOfTarget()
+	{
+		if (Target != null)
+		{
+			return AttackRange >= Vector3.Distance(transform.position, Target.transform.position);
+		}
+
+		return false;
+	}
+
 	private void HandleAttacking()
 	{
 		if (Target != null && !Target.IsDead())
 		{
-			float dist = Vector3.Distance(transform.position, Target.transform.position);
-			if (dist <= AttackRange)
+			if (IsInAttackRangeOfTarget())
 			{
 				if (TimeOfLastAttack + AttackSpeed < Time.timeSinceLevelLoad)
 				{
 					Target.TakeDamage(AttackPower);
 					TimeOfLastAttack = Time.timeSinceLevelLoad;
+
+					Animator.SetTrigger("Attack");
 				}
 			}
 		}
@@ -205,6 +256,19 @@ public class AiUnit : Unit
 		return units;
 	}
 
+	#endregion
+
+	#region -----[ Protected Functions ]------------------------------------------
+
+	protected override Vector3 GetVelocity()
+	{
+		return _navMeshAgent.velocity;
+	}
+
+	#endregion
+
+	#region -----[ Public Functions ]------------------------------------------
+
 	public override void SetupUnitAngles(float cameraAngle)
 	{
 		CameraAngle = cameraAngle;
@@ -218,15 +282,7 @@ public class AiUnit : Unit
 		var position = Visuals.transform.position;
 		position.y -= (position.y * .25f);
 		Visuals.transform.position = position;
-
-		// Update the initial rotation of the player
-		angles = HealthBarContainer.transform.rotation.eulerAngles;
-		angles.x = CameraAngle;
-		Visuals.transform.rotation = Quaternion.Euler(angles);
-
-		// Now change our Y position by 25%
-		position = HealthBarContainer.transform.position;
-		position.y -= (position.y * .25f);
-		Visuals.transform.position = position;
 	}
+
+	#endregion
 }
