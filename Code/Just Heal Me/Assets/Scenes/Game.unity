@@ -7512,11 +7512,11 @@ RectTransform:
   m_Father: {fileID: 1569095525}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 2.5, y: 0.5}
-  m_SizeDelta: {x: 1358.27, y: 261.87}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0.0000076293945, y: 0}
+  m_SizeDelta: {x: 1708.22, y: 278.43}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1991862795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7537,12 +7537,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 72
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 96
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -7550,9 +7550,11 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'WASD to move.
 
-    Left click to heal.
+    Left click unit to heal it.
 
-    Right click to hurt.'
+    Right click unit to hurt it.
+
+    Get your party to the white block at the end of the level.'
 --- !u!222 &1991862796
 CanvasRenderer:
   m_ObjectHideFlags: 0
