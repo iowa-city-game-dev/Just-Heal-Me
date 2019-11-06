@@ -11,6 +11,8 @@ public class Player : Unit
 
     private UnityEngine.Camera _camera;
 
+	public Unit StunnedUnit;
+
 	#region -----[ Unity Lifecycle ]-------------------------------------------
 
 	public override void Awake()
@@ -49,6 +51,16 @@ public class Player : Unit
 		var position = transform.position;
 		position.y -= (position.y * .25f);
 		transform.position = position;
+	}
+
+	public bool CanStun()
+	{
+		if (StunnedUnit != null && !StunnedUnit.IsStunned())
+		{
+			StunnedUnit = null;
+		}
+
+		return StunnedUnit == null;
 	}
 
 	#endregion

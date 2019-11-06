@@ -88,9 +88,17 @@ namespace Managers
                 // This code is only here to test damaging a unit.  It will eventually be another player ability.
                 Unit clickedUnit = GetClickedUnit();
                 clickedUnit?.TakeDamage(_player.GetAttackPower());
-            }
+			}
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+			if (Input.GetKeyDown(KeyCode.Q) && _player.CanStun())
+			{
+				Unit clickedUnit = GetClickedUnit();
+				clickedUnit?.Stun(3.0f);
+
+				_player.StunnedUnit = clickedUnit;
+			}
+
+			if (Input.GetKeyDown(KeyCode.Escape))
             {
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;

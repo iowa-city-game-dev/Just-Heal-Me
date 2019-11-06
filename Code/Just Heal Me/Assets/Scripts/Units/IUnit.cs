@@ -2,9 +2,10 @@
 {
 	void TakeDamage(int rawDamage);
 	void ReceiveHeal(int rawHealAmount);
-	//void GetStunned(float stunDuration);
+	void Stun(float stunDuration);
 
 	bool IsDead();
+	bool IsStunned();
 	int GetCurrentHealth();
 	int GetHealingPower();
 	int GetAttackPower();

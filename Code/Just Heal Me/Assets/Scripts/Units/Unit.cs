@@ -22,6 +22,7 @@ public class Unit : MonoBehaviour, IUnit
 	protected SpriteRenderer _spriteRenderer;
 	protected Color NormalColor;
 	private Color ReceivedHealColor = Color.yellow;
+	private Color StunnedColor = Color.blue;
 
 	protected float TimeOfLastAttack = 0f;
 
@@ -29,6 +30,10 @@ public class Unit : MonoBehaviour, IUnit
 
 	private float TimeLastHealWasReceived = 0f;
 	private float HealColorDuration = 0.5f;
+
+	private float TimeStunStarted = 0f;
+	private float StunDuration = 0f;
+	private bool _wasStunned = false;
 
 	#region -----[ Unity Lifecycle ]-------------------------------------------
 
@@ -59,6 +64,13 @@ public class Unit : MonoBehaviour, IUnit
     {
 		UpdateAnimatorValues();
 		UpdateColor();
+
+		if (_wasStunned && !IsStunned())
+		{
+			OnUnstun();
+		}
+
+		_wasStunned = IsStunned();
 	}
 
 	#endregion
@@ -68,17 +80,36 @@ public class Unit : MonoBehaviour, IUnit
 	private void UpdateAnimatorValues()
 	{
 		Animator.SetFloat("HorizontalSpeed", Mathf.Abs(GetVelocity().x));
+
+		if (IsStunned())
+		{
+			Animator.speed = 0;
+		}
+		else
+		{
+			Animator.speed = 1;
+		}
 	}
 
 	private void UpdateColor()
 	{
-		if (_spriteRenderer.color == ReceivedHealColor)
+		if (IsStunned())
 		{
-			if (Time.timeSinceLevelLoad > TimeLastHealWasReceived + HealColorDuration)
-			{
-				_spriteRenderer.color = NormalColor;
-			}
+			_spriteRenderer.color = StunnedColor;
 		}
+		else if (Time.timeSinceLevelLoad < TimeLastHealWasReceived + HealColorDuration)
+		{
+			_spriteRenderer.color = ReceivedHealColor;
+		}
+		else
+		{
+			_spriteRenderer.color = NormalColor;
+		}
+	}
+
+	private void UpdateHealthBar()
+	{
+		HealthBarContainer.transform.localScale = new Vector3((float)CurrentHealth / MaxHealth, HealthBarContainer.transform.localScale.y, HealthBarContainer.transform.localScale.z);
 	}
 
 	#endregion
@@ -90,12 +121,18 @@ public class Unit : MonoBehaviour, IUnit
 		return new Vector3();
 	}
 
+	protected virtual void OnUnstun()
+	{
+	}
+
 	#endregion
 
 	#region -----[ Public Functions ]------------------------------------------
 
 	public virtual void TakeDamage(int rawDamage)
 	{
+		TimeStunStarted = 0;
+
 		if (CurrentHealth - rawDamage <= 0)
 		{
 			CurrentHealth = 0;
@@ -112,7 +149,6 @@ public class Unit : MonoBehaviour, IUnit
 	{
 		if (CurrentHealth != MaxHealth)
 		{
-			_spriteRenderer.color = ReceivedHealColor;
 			TimeLastHealWasReceived = Time.timeSinceLevelLoad;
 
 			if (CurrentHealth + rawHealAmount >= MaxHealth)
@@ -128,9 +164,15 @@ public class Unit : MonoBehaviour, IUnit
 		}
 	}
 
-	private void UpdateHealthBar()
+	public virtual void Stun(float stunDuration)
 	{
-		HealthBarContainer.transform.localScale = new Vector3((float)CurrentHealth / MaxHealth, HealthBarContainer.transform.localScale.y, HealthBarContainer.transform.localScale.z);
+		StunDuration = stunDuration;
+		TimeStunStarted = Time.timeSinceLevelLoad;
+	}
+
+	public bool IsStunned()
+	{
+		return Time.timeSinceLevelLoad < TimeStunStarted + StunDuration;
 	}
 
 	public virtual int GetCurrentHealth()

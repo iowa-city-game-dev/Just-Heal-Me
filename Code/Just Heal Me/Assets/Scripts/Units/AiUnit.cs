@@ -21,6 +21,8 @@ public class AiUnit : Unit
 
 	Unit Target = null;
 
+	float _initialSpeed = 0f;
+
 	public override void Awake()
 	{
 		Animator = Visuals.GetComponent<Animator>();
@@ -59,6 +61,8 @@ public class AiUnit : Unit
 			}
 		}
 
+		_initialSpeed = _navMeshAgent.speed;
+
 		Visuals.transform.SetParent(null);
 	}
 	
@@ -68,6 +72,8 @@ public class AiUnit : Unit
 
 		if (!IsDead())
 		{
+			UpdateSpeed();
+
 			UpdateTarget();
 			UpdateDestination();
 			UpdateVisualFacingDirection();
@@ -80,8 +86,26 @@ public class AiUnit : Unit
 
 	#region -----[ Private Functions ]------------------------------------------
 
+	private void UpdateSpeed()
+	{
+		if (IsStunned())
+		{
+			_navMeshAgent.speed = 0;
+		}
+		else
+		{
+			_navMeshAgent.speed = _initialSpeed;
+		}
+	}
+
 	private void UpdateTarget()
 	{
+		if (IsStunned())
+		{
+			Target = null;
+			return;
+		}
+
 		float distanceToEnemy = 0f;
 		Unit enemyToGoAfter = null;
 		float shortestDistanceToLosTarget = float.MaxValue;
@@ -263,6 +287,11 @@ public class AiUnit : Unit
 	protected override Vector3 GetVelocity()
 	{
 		return _navMeshAgent.velocity;
+	}
+
+	protected override void OnUnstun()
+	{
+		TimeOfLastAttack = Time.timeSinceLevelLoad;
 	}
 
 	#endregion
