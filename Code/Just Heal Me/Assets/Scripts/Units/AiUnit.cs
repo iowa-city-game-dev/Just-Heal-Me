@@ -19,9 +19,11 @@ public class AiUnit : Unit
 
 	float CameraAngle = 0f;
 
-	Unit Target = null;
+	protected Unit Target = null;
 
 	float _initialSpeed = 0f;
+
+	#region -----[ Unity Lifecycle ]-------------------------------------------
 
 	public override void Awake()
 	{
@@ -83,6 +85,8 @@ public class AiUnit : Unit
 
 		Visuals.transform.position = transform.position;
 	}
+
+	#endregion
 
 	#region -----[ Private Functions ]------------------------------------------
 
@@ -248,10 +252,7 @@ public class AiUnit : Unit
 			{
 				if (TimeOfLastAttack + AttackSpeed < Time.timeSinceLevelLoad)
 				{
-					Target.TakeDamage(AttackPower);
-					TimeOfLastAttack = Time.timeSinceLevelLoad;
-
-					Animator.SetTrigger("Attack");
+					InitiateAttack();
 				}
 			}
 		}
@@ -292,6 +293,14 @@ public class AiUnit : Unit
 	protected override void OnUnstun()
 	{
 		TimeOfLastAttack = Time.timeSinceLevelLoad;
+	}
+
+	protected virtual void InitiateAttack()
+	{
+		Target.TakeDamage(AttackPower);
+		TimeOfLastAttack = Time.timeSinceLevelLoad;
+
+		Animator.SetTrigger("Attack");
 	}
 
 	#endregion
