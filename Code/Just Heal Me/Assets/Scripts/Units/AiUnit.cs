@@ -10,8 +10,8 @@ public class AiUnit : Unit
 	private GameObject NavMeshDestination;
 	private Vector3 NavMeshDestinationPosition;
 
-	private List<Unit> Allies = new List<Unit>();
-	private List<Unit> Enemies = new List<Unit>();
+	protected List<Unit> Allies = new List<Unit>();
+	protected List<Unit> Enemies = new List<Unit>();
 
 	GameObject EndOfLevel;
 
@@ -76,14 +76,19 @@ public class AiUnit : Unit
 		{
 			UpdateSpeed();
 
-			UpdateTarget();
+			UpdateUnitSpecifics();
+
 			UpdateDestination();
 			UpdateVisualFacingDirection();
-
-			HandleAttacking();
 		}
 
 		Visuals.transform.position = transform.position;
+	}
+
+	protected override void UpdateUnitSpecifics()
+	{
+		UpdateTarget();
+		HandleAttacking();
 	}
 
 	#endregion

@@ -16,11 +16,6 @@ public class RangedUnit : AiUnit
 		ArrowObject.transform.parent = null;
 		ArrowObject.SetActive(false);
 	}
-	
-    public override void Update()
-    {
-		base.Update();
-	}
 
 	#endregion
 

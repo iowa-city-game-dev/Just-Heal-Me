@@ -73,6 +73,11 @@ public class Unit : MonoBehaviour, IUnit
 		_wasStunned = IsStunned();
 	}
 
+	protected virtual void UpdateUnitSpecifics()
+	{
+
+	}
+
 	#endregion
 
 	#region -----[ Private Functions ]------------------------------------------
@@ -178,6 +183,11 @@ public class Unit : MonoBehaviour, IUnit
 	public virtual int GetCurrentHealth()
 	{
 		return CurrentHealth;
+	}
+
+	public virtual int GetMaxHealth()
+	{
+		return MaxHealth;
 	}
 
 	public virtual int GetHealingPower()
