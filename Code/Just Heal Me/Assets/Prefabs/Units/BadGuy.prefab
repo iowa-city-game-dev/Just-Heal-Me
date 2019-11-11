@@ -47,14 +47,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22d2e06cc63e6c140a25c2f2c4d51c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 50
+  MaxHealth: 20
   CurrentHealth: 0
+  MaxMana: 0
+  CurrentMana: 0
   HealingPower: 0
   AttackPower: 5
   _isBadGuy: 1
   AttackRange: 2
   AttackSpeed: 2
   HealthBarContainer: {fileID: 6306371817686114737}
+  ManaBarContainer: {fileID: 0}
   Visuals: {fileID: 6000584936602557497}
 --- !u!195 &2265226734712305254
 NavMeshAgent:

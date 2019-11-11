@@ -99,14 +99,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c90dbc6adbfd34db668c8726adb2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 30
+  MaxHealth: 10
   CurrentHealth: 0
+  MaxMana: 0
+  CurrentMana: 0
   HealingPower: 10
   AttackPower: 0
   _isBadGuy: 1
   AttackRange: 0
   AttackSpeed: 0
   HealthBarContainer: {fileID: 6306371817686114737}
+  ManaBarContainer: {fileID: 0}
   Visuals: {fileID: 6000584936602557497}
   HealingRange: 10
   HealingSpeed: 0

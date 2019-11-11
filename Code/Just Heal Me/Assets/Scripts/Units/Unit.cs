@@ -21,6 +21,8 @@ public class Unit : MonoBehaviour, IUnit
 	public Animator Animator { get; protected set; }
 	public Animation Animation { get; protected set; }
 
+	private CapsuleCollider _capsuleCollider;
+	private Rigidbody _rigidbody;
 
 	protected SpriteRenderer _spriteRenderer;
 	protected Color NormalColor;
@@ -45,6 +47,9 @@ public class Unit : MonoBehaviour, IUnit
 	{
 		Animator = GetComponent<Animator>();
 		Animation = GetComponent<Animation>();
+
+		_capsuleCollider = GetComponent<CapsuleCollider>();
+		_rigidbody = GetComponent<Rigidbody>();
 	}
 
 	public virtual void Start()
@@ -158,6 +163,27 @@ public class Unit : MonoBehaviour, IUnit
 		}
 
 		UpdateHealthBar();
+
+		if (CurrentHealth == 0)
+		{
+			Die();
+		}
+
+		Managers.GameManager.Instance.Sound.PlayHitSound();
+	}
+
+	public void Die()
+	{
+		_capsuleCollider.enabled = false;
+		_rigidbody.Sleep();
+	}
+
+	public void Revive()
+	{
+		_capsuleCollider.enabled = true;
+		_rigidbody.WakeUp();
+
+		CurrentHealth = MaxHealth;
 	}
 
 	public virtual void ReceiveHeal(int rawHealAmount)
@@ -176,6 +202,8 @@ public class Unit : MonoBehaviour, IUnit
 			}
 
 			UpdateHealthBar();
+
+			Managers.GameManager.Instance.Sound.PlayHealSound();
 		}
 	}
 

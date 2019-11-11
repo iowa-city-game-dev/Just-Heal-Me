@@ -79,20 +79,20 @@ namespace Managers
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Unit clickedUnit = GetClickedUnit();
+                Unit clickedUnit = GetClickedAlly();
 				_player.HealUnit(clickedUnit);
             }
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                // This code is only here to test damaging a unit.  It will eventually be another player ability.
-                Unit clickedUnit = GetClickedUnit();
-                clickedUnit?.TakeDamage(_player.GetAttackPower());
-			}
+            //if (Input.GetMouseButtonDown(1))
+            //{
+            //    // This code is only here to test damaging a unit.  It will eventually be another player ability.
+            //    Unit clickedUnit = GetClickedUnit();
+            //    clickedUnit?.TakeDamage(_player.GetAttackPower());
+			//}
 
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
-				Unit clickedUnit = GetClickedUnit();
+				Unit clickedUnit = GetClickedEnemy();
 				_player.StunUnit(clickedUnit);
 			}
 
@@ -106,22 +106,38 @@ namespace Managers
             }
         }
 
-        private Unit GetClickedUnit()
-        {
-            Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                return hit.collider.gameObject.GetComponent<Unit>();
-            }
+        private Unit GetClickedUnit(bool goodGuy)
+		{
+			Unit clickedUnit;
+			Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit[] hits = Physics.RaycastAll(ray);
 
-            return null;
-        }
+			for (int i = 0; i < hits.Length; i++)
+			{
+				clickedUnit = hits[i].collider.gameObject.GetComponent<Unit>();
+				if (clickedUnit != null && clickedUnit.IsGoodGuy() == goodGuy)
+				{
+					return clickedUnit;
+				}
+			}
 
-        #endregion
+			return null;
+		}
 
-        #region -----[ Co-Routines ]-------------------------------------------
+		private Unit GetClickedAlly()
+		{
+			return GetClickedUnit(true);
+		}
 
-        #endregion
-    }
+		private Unit GetClickedEnemy()
+		{
+			return GetClickedUnit(false);
+		}
+
+		#endregion
+
+		#region -----[ Co-Routines ]-------------------------------------------
+
+		#endregion
+	}
 }

@@ -77,6 +77,11 @@ PrefabInstance:
       propertyPath: _isBadGuy
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9188601137518046637, guid: be0ee04a9ce3faa409ba13faa37d3010,
+        type: 3}
+      propertyPath: MaxHealth
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3571156830925911534, guid: be0ee04a9ce3faa409ba13faa37d3010,
         type: 3}
       propertyPath: m_Color.r

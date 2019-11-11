@@ -27,6 +27,8 @@ public class AiUnit : Unit
 
 	public override void Awake()
 	{
+		base.Awake();
+
 		Animator = Visuals.GetComponent<Animator>();
 		Animation = Visuals.GetComponent<Animation>();
 	}
