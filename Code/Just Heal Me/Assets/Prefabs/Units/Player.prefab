@@ -32,6 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 278206540571229959}
+  - {fileID: 653403610491282113}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -135,13 +136,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 50
   CurrentHealth: 0
-  HealingPower: 7
+  MaxMana: 50
+  CurrentMana: 0
+  HealingPower: 25
   AttackPower: 4
   _isBadGuy: 0
   AttackRange: 0
   AttackSpeed: 0
   HealthBarContainer: {fileID: 389591191388927294}
+  ManaBarContainer: {fileID: 1127346172669847800}
+  HealSpellManaCost: 10
+  StunSpellManaCost: 5
+  HealthRegenAmount: 8
+  ManaRegenAmount: 4
+  HealthRegenRate: 2
+  ManaRegenRate: 1
   playerData: {fileID: 0}
+  StunnedUnit: {fileID: 0}
 --- !u!1001 &4741491525694600484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187,4 +198,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
     type: 3}
   m_PrefabInstance: {fileID: 4741491525694600484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5404338429565036770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8768567061698168388}
+    m_Modifications:
+    - target: {fileID: 4946415239883554842, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_Name
+      value: ManaBarContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236938957889107371, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4547435871383695852, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_Name
+      value: ManaBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827607646445050173, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827607646445050173, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.9917109
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827607646445050173, guid: 71efc2c475e539e428f14f94650c48e5,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71efc2c475e539e428f14f94650c48e5, type: 3}
+--- !u!1 &1127346172669847800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4946415239883554842, guid: 71efc2c475e539e428f14f94650c48e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 5404338429565036770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &653403610491282113 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 5404338429565036770}
   m_PrefabAsset: {fileID: 0}

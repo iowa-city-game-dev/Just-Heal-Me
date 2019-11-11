@@ -80,7 +80,7 @@ namespace Managers
             if (Input.GetMouseButtonDown(0))
             {
                 Unit clickedUnit = GetClickedUnit();
-                clickedUnit?.ReceiveHeal(_player.GetHealingPower());
+				_player.HealUnit(clickedUnit);
             }
 
             if (Input.GetMouseButtonDown(1))
@@ -90,12 +90,10 @@ namespace Managers
                 clickedUnit?.TakeDamage(_player.GetAttackPower());
 			}
 
-			if (Input.GetKeyDown(KeyCode.Q) && _player.CanStun())
+			if (Input.GetKeyDown(KeyCode.Q))
 			{
 				Unit clickedUnit = GetClickedUnit();
-				clickedUnit?.Stun(3.0f);
-
-				_player.StunnedUnit = clickedUnit;
+				_player.StunUnit(clickedUnit);
 			}
 
 			if (Input.GetKeyDown(KeyCode.Escape))

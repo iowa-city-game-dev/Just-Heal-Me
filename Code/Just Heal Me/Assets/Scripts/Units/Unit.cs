@@ -7,6 +7,9 @@ public class Unit : MonoBehaviour, IUnit
 	[SerializeField] protected int MaxHealth;
 	[SerializeField] protected int CurrentHealth;
 
+	[SerializeField] protected int MaxMana;
+	[SerializeField] protected int CurrentMana;
+
 	[SerializeField] protected int HealingPower;
 	[SerializeField] protected int AttackPower;
 
@@ -27,6 +30,7 @@ public class Unit : MonoBehaviour, IUnit
 	protected float TimeOfLastAttack = 0f;
 
 	public GameObject HealthBarContainer;
+	public GameObject ManaBarContainer;
 
 	private float TimeLastHealWasReceived = 0f;
 	private float HealColorDuration = 0.5f;
@@ -46,6 +50,7 @@ public class Unit : MonoBehaviour, IUnit
 	public virtual void Start()
     {
 		CurrentHealth = MaxHealth;
+		CurrentMana = MaxMana;
 
 		_spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -102,7 +107,7 @@ public class Unit : MonoBehaviour, IUnit
 		{
 			_spriteRenderer.color = StunnedColor;
 		}
-		else if (Time.timeSinceLevelLoad < TimeLastHealWasReceived + HealColorDuration)
+		else if (Time.timeSinceLevelLoad < TimeLastHealWasReceived + HealColorDuration && Time.timeSinceLevelLoad > HealColorDuration)
 		{
 			_spriteRenderer.color = ReceivedHealColor;
 		}
@@ -110,11 +115,6 @@ public class Unit : MonoBehaviour, IUnit
 		{
 			_spriteRenderer.color = NormalColor;
 		}
-	}
-
-	private void UpdateHealthBar()
-	{
-		HealthBarContainer.transform.localScale = new Vector3((float)CurrentHealth / MaxHealth, HealthBarContainer.transform.localScale.y, HealthBarContainer.transform.localScale.z);
 	}
 
 	#endregion
@@ -128,6 +128,16 @@ public class Unit : MonoBehaviour, IUnit
 
 	protected virtual void OnUnstun()
 	{
+	}
+
+	protected void UpdateHealthBar()
+	{
+		HealthBarContainer.transform.localScale = new Vector3((float)CurrentHealth / MaxHealth, HealthBarContainer.transform.localScale.y, HealthBarContainer.transform.localScale.z);
+	}
+
+	protected void UpdateManaBar()
+	{
+		ManaBarContainer.transform.localScale = new Vector3((float)CurrentMana / MaxMana, ManaBarContainer.transform.localScale.y, ManaBarContainer.transform.localScale.z);
 	}
 
 	#endregion
