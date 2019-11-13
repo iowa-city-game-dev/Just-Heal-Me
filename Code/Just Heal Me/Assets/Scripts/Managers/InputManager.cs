@@ -48,7 +48,10 @@ namespace Managers
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
 
-            if (horizontal == 0f && vertical == 0f) return; // no need to do anything
+			if (horizontal == 0f && vertical == 0f)
+			{
+				_player.CharacterController.Move(Vector3.zero);
+			}
 
             var isRunning = Input.GetKey(KeyCode.LeftShift);
             _player.Animator.speed = isRunning ? 3 : 1;
@@ -73,7 +76,7 @@ namespace Managers
 //            velocity.y = _player.transform.position.y; // This needs to be a static position
 
             _player.CharacterController.Move(velocity);
-        }
+		}
 
         private void HandleActions()
         {
@@ -83,17 +86,16 @@ namespace Managers
 				_player.HealUnit(clickedUnit);
             }
 
-            //if (Input.GetMouseButtonDown(1))
-            //{
-            //    // This code is only here to test damaging a unit.  It will eventually be another player ability.
-            //    Unit clickedUnit = GetClickedUnit();
-            //    clickedUnit?.TakeDamage(_player.GetAttackPower());
-			//}
-
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
 				Unit clickedUnit = GetClickedEnemy();
 				_player.StunUnit(clickedUnit);
+			}
+			
+			if (Input.GetKeyDown(KeyCode.E))
+			{
+				Unit clickedUnit = GetClickedAlly();
+				_player.ReviveUnit(clickedUnit);
 			}
 
 			if (Input.GetKeyDown(KeyCode.Escape))

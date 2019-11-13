@@ -1,4 +1,5 @@
 ﻿using Scriptable;
+using System.Collections;
 using UnityEngine;
 
 public class Player : Unit
@@ -6,7 +7,15 @@ public class Player : Unit
 	[SerializeField]
 	private int HealSpellManaCost;
 	[SerializeField]
+	private float HealSpellCastTime;
+	[SerializeField]
 	private int StunSpellManaCost;
+	[SerializeField]
+	private float StunSpellCastTime;
+	[SerializeField]
+	private int ReviveSpellManaCost;
+	[SerializeField]
+	private float ReviveSpellCastTime;
 
 	[SerializeField]
 	private int HealthRegenAmount;
@@ -31,6 +40,12 @@ public class Player : Unit
 
 	[HideInInspector]
 	public Unit StunnedUnit;
+
+	public GameObject CastBarContainer;
+	private float CurrentCastTime = 0f;
+	private float TimeCurrentSpellStartedBeingCast = 0f;
+	
+	Coroutine SpellCastingCoroutine;
 
 	#region -----[ Unity Lifecycle ]-------------------------------------------
 
@@ -80,6 +95,72 @@ public class Player : Unit
 			UpdateManaBar();
 		}
 		_modulusTimeOfLastManaRegenCheck = Time.timeSinceLevelLoad % ManaRegenRate;
+
+		CheckForCancellingCast();
+		UpdateCastBar();
+	}
+
+	#endregion
+
+	#region -----[ private Functions ]------------------------------------------
+
+	private void SetCurrentCastValues(float newCastTime)
+	{
+		TimeCurrentSpellStartedBeingCast = Time.timeSinceLevelLoad;
+		CurrentCastTime = newCastTime;
+	}
+
+	private void ResetCurrentCastValues()
+	{
+		TimeCurrentSpellStartedBeingCast = Time.timeSinceLevelLoad;
+		CurrentCastTime = 0f;
+	}
+
+	private void CancelCurrentCasting()
+	{
+		ResetCurrentCastValues();
+
+		StopCoroutine(SpellCastingCoroutine);
+	}
+
+	private void UpdateCastBar()
+	{
+		if (IsCastingSpell())
+		{
+			CastBarContainer.transform.localScale = new Vector3((Time.timeSinceLevelLoad - TimeCurrentSpellStartedBeingCast) / CurrentCastTime, CastBarContainer.transform.localScale.y, CastBarContainer.transform.localScale.z);
+		}
+		else
+		{
+			CastBarContainer.transform.localScale = new Vector3(0f, CastBarContainer.transform.localScale.y, CastBarContainer.transform.localScale.z);
+		}
+	}
+
+	private bool CanCastSpell(int manaCost, float castTime)
+	{
+		if (CurrentMana < manaCost)
+		{
+			return false;
+		}
+
+		if (IsCastingSpell())
+		{
+			return false;
+		}
+
+		if (GetVelocity().magnitude > 0f && castTime > 0f)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	private void CheckForCancellingCast()
+	{
+		if (IsCastingSpell() && GetVelocity().magnitude > 0f)
+		{
+			CancelCurrentCasting();
+		}
 	}
 
 	#endregion
@@ -122,28 +203,76 @@ public class Player : Unit
 	{
 		if (unit != null && !unit.IsDead() && unit.IsGoodGuy())
 		{
-			if (CurrentMana > HealSpellManaCost)
+			if (CanCastSpell(HealSpellManaCost, HealSpellCastTime))
 			{
-				CurrentMana -= HealSpellManaCost;
-				UpdateManaBar();
-
-				unit.ReceiveHeal(GetHealingPower());
+				SpellCastingCoroutine = StartCoroutine(CoroutineHealUnit(unit));
 			}
 		}
+	}
+
+	IEnumerator CoroutineHealUnit(Unit unit)
+	{
+		SetCurrentCastValues(HealSpellCastTime);
+
+		yield return new WaitForSeconds(HealSpellCastTime);
+		
+		CurrentMana -= HealSpellManaCost;
+		UpdateManaBar();
+
+		unit.ReceiveHeal(GetHealingPower());
 	}
 
 	public void StunUnit(Unit unit)
 	{
 		if (unit != null && !unit.IsDead() && unit.IsBadGuy() && CanStun())
 		{
-			if (CurrentMana > StunSpellManaCost)
+			if (CanCastSpell(StunSpellManaCost, StunSpellCastTime))
 			{
-				CurrentMana -= StunSpellManaCost;
-				UpdateManaBar();
-
-				unit.Stun(3.0f);
+				SpellCastingCoroutine = StartCoroutine(CoroutineStunUnit(unit));
 			}
 		}
+	}
+
+	IEnumerator CoroutineStunUnit(Unit unit)
+	{
+		SetCurrentCastValues(StunSpellCastTime);
+
+		yield return new WaitForSeconds(StunSpellCastTime);
+		
+		CurrentMana -= StunSpellManaCost;
+		UpdateManaBar();
+
+		unit.Stun(3.0f);
+	}
+
+	public void ReviveUnit(Unit unit)
+	{
+		if (unit != null && unit.IsDead() && unit.IsGoodGuy())
+		{
+			if (CanCastSpell(ReviveSpellManaCost, ReviveSpellCastTime))
+			{
+				SpellCastingCoroutine = StartCoroutine(CoroutineReviveUnit(unit));
+			}
+		}
+	}
+
+	IEnumerator CoroutineReviveUnit(Unit unit)
+	{
+		SetCurrentCastValues(ReviveSpellCastTime);
+
+		yield return new WaitForSeconds(ReviveSpellCastTime);
+
+		CurrentMana -= ReviveSpellManaCost;
+		UpdateManaBar();
+
+		unit.Revive();
+
+		ReviveSpellCastTime += 2f;
+	}
+
+	public bool IsCastingSpell()
+	{
+		return TimeCurrentSpellStartedBeingCast + CurrentCastTime > Time.timeSinceLevelLoad;
 	}
 
 	#endregion

@@ -4356,10 +4356,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fighter
       objectReference: {fileID: 0}
+    - target: {fileID: 3563958553322327892, guid: 63eeab1ee7f6b9242abbacb1ea22e2a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6741444449018231390, guid: 63eeab1ee7f6b9242abbacb1ea22e2a7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -53.91
+      value: -53.66
       objectReference: {fileID: 0}
     - target: {fileID: 6741444449018231390, guid: 63eeab1ee7f6b9242abbacb1ea22e2a7,
         type: 3}
@@ -4369,7 +4374,7 @@ PrefabInstance:
     - target: {fileID: 6741444449018231390, guid: 63eeab1ee7f6b9242abbacb1ea22e2a7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.67
+      value: 1.43
       objectReference: {fileID: 0}
     - target: {fileID: 6741444449018231390, guid: 63eeab1ee7f6b9242abbacb1ea22e2a7,
         type: 3}
@@ -8497,9 +8502,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'WASD to move.  Q to Stun enemy.  Left click Ally to Heal it.
+  m_Text: 'WASD to move.  Q to Stun enemy.  Left click Ally to Heal it.  E to Revive
+    ally.
 
-    Healing and Stunning cost mana.'
+    Healing, Stunning, and Reviving cost mana.  Only instant spells can be cast while
+    moving.'
 --- !u!222 &2146475911
 CanvasRenderer:
   m_ObjectHideFlags: 0

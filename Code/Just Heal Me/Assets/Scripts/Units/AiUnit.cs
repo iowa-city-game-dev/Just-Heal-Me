@@ -267,11 +267,14 @@ public class AiUnit : Unit
 
 	private void SetDestination(GameObject newGoal)
 	{
-		NavMeshDestination = newGoal;
+		if (_navMeshAgent != null)
+		{
+			NavMeshDestination = newGoal;
 
-		NavMeshDestinationPosition = NavMeshDestination.transform.position;
+			NavMeshDestinationPosition = NavMeshDestination.transform.position;
 
-		_navMeshAgent.SetDestination(NavMeshDestinationPosition);
+			_navMeshAgent.SetDestination(NavMeshDestinationPosition);
+		}
 	}
 
 	private List<Unit> FindOtherUnitsOfTag(string tag)
@@ -313,6 +316,20 @@ public class AiUnit : Unit
 	#endregion
 
 	#region -----[ Public Functions ]------------------------------------------
+
+	public override void Die()
+	{
+		base.Die();
+
+		_navMeshAgent.enabled = false;
+	}
+
+	public override void Revive()
+	{
+		base.Revive();
+
+		_navMeshAgent.enabled = true;
+	}
 
 	public override void SetupUnitAngles(float cameraAngle)
 	{

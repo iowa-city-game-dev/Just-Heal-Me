@@ -172,18 +172,20 @@ public class Unit : MonoBehaviour, IUnit
 		Managers.GameManager.Instance.Sound.PlayHitSound();
 	}
 
-	public void Die()
+	public virtual void Die()
 	{
-		_capsuleCollider.enabled = false;
+		//_capsuleCollider.enabled = false;
 		_rigidbody.Sleep();
 	}
 
-	public void Revive()
+	public virtual void Revive()
 	{
-		_capsuleCollider.enabled = true;
+		//_capsuleCollider.enabled = true;
 		_rigidbody.WakeUp();
 
 		CurrentHealth = MaxHealth;
+
+		UpdateHealthBar();
 	}
 
 	public virtual void ReceiveHeal(int rawHealAmount)
