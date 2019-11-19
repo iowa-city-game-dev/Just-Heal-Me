@@ -2640,7 +2640,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.8e-43, y: 0, z: 9.1835e-41, w: 5.1134013e-37}
+  m_BoundingSphereOverride: {x: 0.46875, y: 0.087890625, z: 0.14453125, w: -0.087890625}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -6674,6 +6674,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitSound: {fileID: 8300000, guid: 9d9fc15fc430128418fe65e5eafe4c03, type: 3}
   HealSound: {fileID: 8300000, guid: 79f389a01224fa140b0287c94d2b3166, type: 3}
+  CastingHealSound: {fileID: 8300000, guid: 1e6a5da48f6cfd0449dcaca8832125c9, type: 3}
+  StunSound: {fileID: 8300000, guid: 2059fcc8dbfd35240ac13dea2e1e0b2d, type: 3}
 --- !u!82 &1708932988
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6684,11 +6686,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 2fd65d01ff9f1f44bbee4d15381f2f76, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -7794,6 +7796,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 22ee846d35058974e9ab3fee06dd0523, type: 2}
+    - target: {fileID: 5764765425482260879, guid: ed2f6d1bc826c3f48af2ccb5d916774e,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed2f6d1bc826c3f48af2ccb5d916774e, type: 3}
 --- !u!1 &2050379071

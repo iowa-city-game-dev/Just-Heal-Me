@@ -36,6 +36,7 @@ Transform:
   - {fileID: 278206540571229959}
   - {fileID: 653403610491282113}
   - {fileID: 3209729920021216703}
+  - {fileID: 3145207772180948001}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,13 +119,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2.25
-  m_Radius: 1.81
+  m_Height: 3.13
+  m_Radius: 0.89
   m_SlopeLimit: 43.45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.68, z: 0}
 --- !u!114 &8487794854616360849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +149,7 @@ MonoBehaviour:
   AttackSpeed: 0
   HealthBarContainer: {fileID: 389591191388927294}
   ManaBarContainer: {fileID: 1127346172669847800}
+  HoverIndicatorsSpriteRenderer: {fileID: 5764765425482260879}
   HealSpellManaCost: 10
   HealSpellCastTime: 1
   StunSpellManaCost: 5
@@ -187,10 +189,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.61
-  m_Height: 3.35
+  m_Radius: 0.89
+  m_Height: 3.13
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.68, z: 0}
 --- !u!1 &3044213561898645382
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,4 +445,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4760667868951808547, guid: 71efc2c475e539e428f14f94650c48e5,
     type: 3}
   m_PrefabInstance: {fileID: 5404338429565036770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6331649377827577557
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8768567061698168388}
+    m_Modifications:
+    - target: {fileID: 4051492830629474087, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_Name
+      value: HoverIndicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 46a25f8c247da4b45b253c01ffd69ec4, type: 3}
+--- !u!4 &3145207772180948001 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6331649377827577557}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &5764765425482260879 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 566897253867765594, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6331649377827577557}
   m_PrefabAsset: {fileID: 0}

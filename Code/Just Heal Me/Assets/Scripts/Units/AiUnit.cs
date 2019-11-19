@@ -267,7 +267,7 @@ public class AiUnit : Unit
 
 	private void SetDestination(GameObject newGoal)
 	{
-		if (_navMeshAgent != null)
+		if (_navMeshAgent != null && _navMeshAgent.isOnNavMesh)
 		{
 			NavMeshDestination = newGoal;
 

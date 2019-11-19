@@ -213,6 +213,8 @@ public class Player : Unit
 	IEnumerator CoroutineHealUnit(Unit unit)
 	{
 		SetCurrentCastValues(HealSpellCastTime);
+		
+		Managers.GameManager.Instance.Sound.PlayCastingHealSound();
 
 		yield return new WaitForSeconds(HealSpellCastTime);
 		

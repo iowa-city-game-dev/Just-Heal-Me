@@ -8,6 +8,8 @@ public class SoundManager : MonoBehaviour
 
 	public AudioClip HitSound;
 	public AudioClip HealSound;
+	public AudioClip CastingHealSound;
+	public AudioClip StunSound;
 
 	// Start is called before the first frame update
 	void Start()
@@ -29,5 +31,15 @@ public class SoundManager : MonoBehaviour
 	public void PlayHealSound()
 	{
 		_audioSource.PlayOneShot(HealSound);
+	}
+
+	public void PlayCastingHealSound()
+	{
+		_audioSource.PlayOneShot(CastingHealSound);
+	}
+
+	public void PlayStunSound()
+	{
+		_audioSource.PlayOneShot(StunSound);
 	}
 }

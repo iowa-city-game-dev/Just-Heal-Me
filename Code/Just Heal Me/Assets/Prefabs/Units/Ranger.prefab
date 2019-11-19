@@ -33,6 +33,7 @@ Transform:
   m_Children:
   - {fileID: 5613200201896945906}
   - {fileID: 8415192394857703282}
+  - {fileID: 7677134610420661772}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -68,10 +69,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.73
-  m_Height: 5.4
+  m_Radius: 0.89
+  m_Height: 3.13
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.68, z: 0}
 --- !u!114 &9188601137518046637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +96,7 @@ MonoBehaviour:
   AttackSpeed: 2
   HealthBarContainer: {fileID: 4056829231392109672}
   ManaBarContainer: {fileID: 0}
+  HoverIndicatorsSpriteRenderer: {fileID: 1237402558911003554}
   Visuals: {fileID: 4363468267817945568}
   ArrowObject: {fileID: 4080005738797393151}
 --- !u!54 &4484368068118213141
@@ -193,6 +195,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8086349974991339980, guid: d3f35460388acd04cb42be41e0562fb7,
     type: 3}
   m_PrefabInstance: {fileID: 355987302278162110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1653424827213677816
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6741444449018231390}
+    m_Modifications:
+    - target: {fileID: 4051492830629474087, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_Name
+      value: HoverIndicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 46a25f8c247da4b45b253c01ffd69ec4, type: 3}
+--- !u!4 &7677134610420661772 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8969072993298348788, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1653424827213677816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1237402558911003554 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 566897253867765594, guid: 46a25f8c247da4b45b253c01ffd69ec4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1653424827213677816}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2649180444429066498
 PrefabInstance:

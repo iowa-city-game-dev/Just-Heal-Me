@@ -10,6 +10,7 @@ TagManager:
   - Goal
   - GoodGuy
   - BadGuy
+  - HoverIndicator
   layers:
   - Default
   - TransparentFX

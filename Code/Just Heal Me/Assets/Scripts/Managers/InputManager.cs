@@ -11,6 +11,8 @@ namespace Managers
         private Player _player;
         private bool _facingRight = true;
 
+		private Unit HoveredUnit;
+
         #region -----[ Unity Lifecycle ]---------------------------------------
 
         private void Awake()
@@ -80,7 +82,20 @@ namespace Managers
 
         private void HandleActions()
         {
-            if (Input.GetMouseButtonDown(0))
+			Unit newHoveredUnit = GetHoveredUnit();
+
+			if (HoveredUnit == null && newHoveredUnit != null)
+			{
+				newHoveredUnit.StartHover();
+			}
+			else if (HoveredUnit != null && HoveredUnit != newHoveredUnit)
+			{
+				HoveredUnit.StopHover();
+			}
+
+			HoveredUnit = newHoveredUnit;
+
+			if (Input.GetMouseButtonDown(0))
             {
                 Unit clickedUnit = GetClickedAlly();
 				_player.HealUnit(clickedUnit);
@@ -106,9 +121,30 @@ namespace Managers
                 Application.Quit();
 #endif
             }
-        }
+		}
 
-        private Unit GetClickedUnit(bool goodGuy)
+		private Unit GetHoveredUnit()
+		{
+			Unit hoveredUnit;
+			Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit[] hits = Physics.RaycastAll(ray);
+
+			for (int i = 0; i < hits.Length; i++)
+			{
+				if (hits[i].collider.CompareTag("GoodGuy") || hits[i].collider.CompareTag("BadGuy"))
+				{
+					hoveredUnit = hits[i].collider.gameObject.GetComponent<Unit>();
+					if (hoveredUnit != null)
+					{
+						return hoveredUnit;
+					}
+				}
+			}
+
+			return null;
+		}
+
+		private Unit GetClickedUnit(bool goodGuy)
 		{
 			Unit clickedUnit;
 			Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -41,6 +41,8 @@ public class Unit : MonoBehaviour, IUnit
 	private float StunDuration = 0f;
 	private bool _wasStunned = false;
 
+	public SpriteRenderer HoverIndicatorsSpriteRenderer;
+
 	#region -----[ Unity Lifecycle ]-------------------------------------------
 
 	public virtual void Awake()
@@ -50,6 +52,8 @@ public class Unit : MonoBehaviour, IUnit
 
 		_capsuleCollider = GetComponent<CapsuleCollider>();
 		_rigidbody = GetComponent<Rigidbody>();
+		
+		HoverIndicatorsSpriteRenderer.color = new Color(HoverIndicatorsSpriteRenderer.color.r, HoverIndicatorsSpriteRenderer.color.g, HoverIndicatorsSpriteRenderer.color.b, 0f);
 	}
 
 	public virtual void Start()
@@ -213,6 +217,8 @@ public class Unit : MonoBehaviour, IUnit
 	{
 		StunDuration = stunDuration;
 		TimeStunStarted = Time.timeSinceLevelLoad;
+
+		Managers.GameManager.Instance.Sound.PlayStunSound();
 	}
 
 	public bool IsStunned()
@@ -257,6 +263,16 @@ public class Unit : MonoBehaviour, IUnit
 
 	public virtual void SetupUnitAngles(float CameraAngle)
 	{
+	}
+
+	public void StartHover()
+	{
+		HoverIndicatorsSpriteRenderer.color = new Color(HoverIndicatorsSpriteRenderer.color.r, HoverIndicatorsSpriteRenderer.color.g, HoverIndicatorsSpriteRenderer.color.b, 1f);
+	}
+
+	public void StopHover()
+	{
+		HoverIndicatorsSpriteRenderer.color = new Color(HoverIndicatorsSpriteRenderer.color.r, HoverIndicatorsSpriteRenderer.color.g, HoverIndicatorsSpriteRenderer.color.b, 0f);
 	}
 
 	#endregion
