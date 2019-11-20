@@ -110,7 +110,8 @@ public class MainMenuManager : MonoBehaviour
 
 	public void StartGame()
 	{
-		SceneManager.LoadScene("Game");
+		SceneManager.LoadScene("Managers");
+		SceneManager.LoadScene("Town", LoadSceneMode.Additive);
 	}
 
 	public void ExitGame()

@@ -113,7 +113,7 @@ MonoBehaviour:
   ManaBarContainer: {fileID: 0}
   HoverIndicatorsSpriteRenderer: {fileID: 4184598084650623256}
   Visuals: {fileID: 6000584936602557497}
-  HealingRange: 10
+  HealingRange: 5
   HealingSpeed: 0
 --- !u!1001 &4453122998379994690
 PrefabInstance:

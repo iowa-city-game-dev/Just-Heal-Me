@@ -90,10 +90,10 @@ MonoBehaviour:
   MaxMana: 0
   CurrentMana: 0
   HealingPower: 0
-  AttackPower: 10
+  AttackPower: 15
   _isBadGuy: 0
-  AttackRange: 20
-  AttackSpeed: 2
+  AttackRange: 10
+  AttackSpeed: 3
   HealthBarContainer: {fileID: 4056829231392109672}
   ManaBarContainer: {fileID: 0}
   HoverIndicatorsSpriteRenderer: {fileID: 1237402558911003554}

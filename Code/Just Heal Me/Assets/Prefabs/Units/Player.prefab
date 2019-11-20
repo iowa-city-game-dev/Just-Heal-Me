@@ -158,8 +158,8 @@ MonoBehaviour:
   ReviveSpellCastTime: 3
   HealthRegenAmount: 8
   ManaRegenAmount: 4
-  HealthRegenRate: 2
-  ManaRegenRate: 1
+  HealthRegenRate: 5
+  ManaRegenRate: 3
   playerData: {fileID: 0}
   StunnedUnit: {fileID: 0}
   CastBarContainer: {fileID: 3044213561898645382}

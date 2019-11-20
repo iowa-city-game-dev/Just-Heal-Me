@@ -43,6 +43,8 @@ public class Unit : MonoBehaviour, IUnit
 
 	public SpriteRenderer HoverIndicatorsSpriteRenderer;
 
+	protected Vector3 StartingPosition;
+
 	#region -----[ Unity Lifecycle ]-------------------------------------------
 
 	public virtual void Awake()
@@ -52,7 +54,9 @@ public class Unit : MonoBehaviour, IUnit
 
 		_capsuleCollider = GetComponent<CapsuleCollider>();
 		_rigidbody = GetComponent<Rigidbody>();
-		
+
+		StartingPosition = transform.position;
+
 		HoverIndicatorsSpriteRenderer.color = new Color(HoverIndicatorsSpriteRenderer.color.r, HoverIndicatorsSpriteRenderer.color.g, HoverIndicatorsSpriteRenderer.color.b, 0f);
 	}
 
@@ -146,7 +150,10 @@ public class Unit : MonoBehaviour, IUnit
 
 	protected void UpdateManaBar()
 	{
-		ManaBarContainer.transform.localScale = new Vector3((float)CurrentMana / MaxMana, ManaBarContainer.transform.localScale.y, ManaBarContainer.transform.localScale.z);
+		if (ManaBarContainer != null)
+		{
+			ManaBarContainer.transform.localScale = new Vector3((float)CurrentMana / MaxMana, ManaBarContainer.transform.localScale.y, ManaBarContainer.transform.localScale.z);
+		}
 	}
 
 	#endregion
@@ -273,6 +280,25 @@ public class Unit : MonoBehaviour, IUnit
 	public void StopHover()
 	{
 		HoverIndicatorsSpriteRenderer.color = new Color(HoverIndicatorsSpriteRenderer.color.r, HoverIndicatorsSpriteRenderer.color.g, HoverIndicatorsSpriteRenderer.color.b, 0f);
+	}
+
+	public virtual void Reset()
+	{
+		transform.position = StartingPosition;
+
+		if (tag == "BadGuy")
+		{
+			MaxHealth = (int)(MaxHealth * 1.25f);
+			AttackPower = (int)(AttackPower * 1.25f);
+			AttackSpeed = AttackSpeed * 0.9f;
+			HealingPower = (int)(HealingPower * 1.25f);
+		}
+
+		CurrentHealth = MaxHealth;
+		CurrentMana = MaxMana;
+
+		UpdateHealthBar();
+		UpdateManaBar();
 	}
 
 	#endregion

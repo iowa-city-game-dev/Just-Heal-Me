@@ -6,7 +6,24 @@ namespace Managers
 {
     public class InputManager : Singleton<InputManager>
     {
-        public float CameraAngle { get; set; } = 45; // Default is 45degrees
+		private float _cameraAngle = 45; // Default is 45degrees
+		public float CameraAngle { 
+			get
+			{
+				return _cameraAngle;
+			}
+			set
+			{
+				_cameraAngle = value;
+
+				Unit[] units = FindObjectsOfType<Unit>();
+				
+				for (int i = 0; i < units.Length; i++)
+				{
+				    units[i].SetupUnitAngles(_cameraAngle);
+				}
+			}
+		}
 
         private Player _player;
         private bool _facingRight = true;
@@ -26,19 +43,26 @@ namespace Managers
             _player = FindObjectOfType<Player>();
             if (_player == null) Debug.LogError("Could not find the player!");
 
-            Unit[] units = FindObjectsOfType<Unit>();
-
-            for (int i = 0; i < units.Length; i++)
-            {
-                units[i].SetupUnitAngles(CameraAngle);
-            }
+            //Unit[] units = FindObjectsOfType<Unit>();
+			//
+            //for (int i = 0; i < units.Length; i++)
+            //{
+            //    units[i].SetupUnitAngles(CameraAngle);
+            //}
         }
 
         // Update is called once per frame
         void Update()
-        {
-            HandleMovement();
-            HandleActions();
+		{
+			if (_player == null)
+			{
+				_player = FindObjectOfType<Player>();
+			}
+			else
+			{
+				HandleMovement();
+				HandleActions();
+			}
         }
 
         #endregion

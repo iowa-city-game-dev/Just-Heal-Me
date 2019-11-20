@@ -17,13 +17,14 @@ namespace Camera
         private void Awake()
         {
             _zOffset = transform.position.z;
-            FindObjectOfType<InputManager>().CameraAngle = transform.rotation.eulerAngles.x;
         }
 
         private void Start()
-        {
-            // Since we always need a target, throw out some errors if it's null
-            if (target == null) Debug.LogError("[FollowCamera]: Start - No target is set for the camera to follow, please set a target!");
+		{
+			FindObjectOfType<InputManager>().CameraAngle = transform.rotation.eulerAngles.x;
+
+			// Since we always need a target, throw out some errors if it's null
+			if (target == null) Debug.LogError("[FollowCamera]: Start - No target is set for the camera to follow, please set a target!");
         }
 
         private void Update()

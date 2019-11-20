@@ -37,6 +37,8 @@ public class AiUnit : Unit
 	{
 		base.Start();
 
+		SetupUnitAngles(FindObjectOfType<Managers.InputManager>().CameraAngle);
+
 		_navMeshAgent = GetComponent<NavMeshAgent>();
 
 		if (_isBadGuy)
@@ -267,12 +269,12 @@ public class AiUnit : Unit
 
 	private void SetDestination(GameObject newGoal)
 	{
-		if (_navMeshAgent != null && _navMeshAgent.isOnNavMesh)
+		if (_navMeshAgent != null && _navMeshAgent.isActiveAndEnabled)
 		{
 			NavMeshDestination = newGoal;
 
 			NavMeshDestinationPosition = NavMeshDestination.transform.position;
-
+			
 			_navMeshAgent.SetDestination(NavMeshDestinationPosition);
 		}
 	}
@@ -344,6 +346,13 @@ public class AiUnit : Unit
 		var position = Visuals.transform.position;
 		position.y -= (position.y * .25f);
 		Visuals.transform.position = position;
+	}
+
+	public override void Reset()
+	{
+		base.Reset();
+
+		_navMeshAgent.enabled = true;
 	}
 
 	#endregion

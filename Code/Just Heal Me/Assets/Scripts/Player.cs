@@ -277,5 +277,14 @@ public class Player : Unit
 		return TimeCurrentSpellStartedBeingCast + CurrentCastTime > Time.timeSinceLevelLoad;
 	}
 
+	public override void Reset()
+	{
+		base.Reset();
+
+		CharacterController.enabled = false;
+		CharacterController.transform.position = StartingPosition;
+		CharacterController.enabled = true;
+	}
+
 	#endregion
 }

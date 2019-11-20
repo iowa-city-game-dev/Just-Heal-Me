@@ -53,7 +53,7 @@ MonoBehaviour:
   MaxMana: 0
   CurrentMana: 0
   HealingPower: 0
-  AttackPower: 5
+  AttackPower: 8
   _isBadGuy: 0
   AttackRange: 2
   AttackSpeed: 1
